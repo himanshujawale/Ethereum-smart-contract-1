@@ -1,5 +1,7 @@
+# pull ubuntu image from docker hub
 FROM ubuntu:focal
 
+#disable frontend 
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Space-separated version string without leading 'v' (e.g. "0.4.21 0.4.22") 
@@ -7,56 +9,72 @@ ARG SOLC
 
 RUN apt-get update
 
+# install wget and uzip libirary to download data from http url
 RUN apt-get install -y \
     wget \
     unzip
 
+# download all file from github with the help of wget 
 RUN wget https://github.com/Microservices-delixus/Ethereum-smart-contract/archive/main.zip
 
+# extract main.zip file 
 RUN  unzip main.zip 
+
+#rename file name Ethereum-smart-contract-main to mythirl
 RUN  mv Ethereum-smart-contract-main/ mythril 
+
+#Move myhtril folder into home directory 
 RUN  mv mythril/ /home
 
-
-
+# update all libarary  and install python and pip or create soft-link for python
 RUN apt-get update \
  && apt-get install -y \
     python3 \
     python3-pip \
  && ln -s /usr/bin/python3 /usr/local/bin/python
 
+# add ethereum libarary and install common properties
 RUN  apt-get install -y \
      software-properties-common \
   &&  add-apt-repository ppa:ethereum/ethereum
   
+# install solidity compiler 
 RUN apt-get update \
    && apt-get install -y \
       solc
 
+# set Working directory
 WORKDIR /home/mythril
  
 #RUN cd /home/mythril
 #RUN ls
 
+#install all requirements dependency
 RUN  pip3 install -r requirements.txt
 
+# create new workdir into home directory and move file into workdir
 RUN mkdir ../workdir
 RUN mv  Save_logs.sh solidity_files/ ../workdir 
 
+# change WORKDIR to workdir
 WORKDIR /home/workdir 
 
-
-
+# give file execute permission to save_logs.sh  
 RUN chmod +x Save_logs.sh
 
+# execute Save_logs.sh file to save mythril analyze output of solidity file inside logfile 
 RUN ./Save_logs.sh
 
+# install Ethereum
 RUN apt-get install -y ethereum
 
+# create script and write cmd inside with help redirection > oprator
 RUN  echo  geth  --rinkeby --datadir .  --http --http.api db,eth,net,web3,personal  > eth_start.sh
 
+#give file execute permission to save_logs.sh 
 RUN chmod +x eth_start.sh
 
+# start Ethereum network from test server
 RUN ./eth_start.sh
 
 
