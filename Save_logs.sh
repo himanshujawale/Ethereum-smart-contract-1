@@ -8,7 +8,7 @@ do
   then
 
         myth analyze solidity_files/$eachfile &> ${eachfile%.*}_log   # execute myth analyze on Smart Contract  and save result inside  log file
-        mv log_$temp data_log/                # move all log file in data_log folder 
+        # mv log_$temp data_log/                # move all log file in data_log folder 
         echo ${eachfile%.*}_log file created successfully. 
   fi
   
