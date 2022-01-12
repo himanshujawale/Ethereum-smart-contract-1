@@ -1,3 +1,4 @@
+#!/bin/bash
 filenames=`ls -l solidity_files | grep '^-' | awk '{print $9}'`
 [ -d "data_log" ] && echo "Mythril analyzing..." || echo -e " Directory Creating.... \n Mythril analyzing..." $(mkdir data_log) 
 
