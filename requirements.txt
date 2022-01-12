@@ -19,5 +19,5 @@ pytest_mock
 requests
 pysha3
 web3
-dotenv
+#dotenv
 mythril
