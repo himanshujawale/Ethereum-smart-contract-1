@@ -1,4 +1,4 @@
-filenames=`ls -l | grep '^-' | awk '{print $9}'`
+filenames=`ls -l /solidity_files | grep '^-' | awk '{print $9}'`
 [ -d "data_log" ] && echo "ok" || echo -e "Data log \n Directory Creating...." $(mkdir data_log) 
 
 temp=1
