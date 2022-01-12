@@ -1,0 +1,56 @@
+FROM ubuntu:focal
+
+RUN apt-get update
+
+RUN apt-get install -y \
+    wget \
+    unzip
+
+RUN wget https://github.com/Microservices-delixus/Ethereum-smart-contract/archive/main.zip
+
+RUN  unzip main.zip \
+ &&  mv Ethereum-smart-contract-main/ mythril \
+ &&  mv mythril/ /home
+
+RUN cd /home/mythril
+
+RUN apt-get update \
+ && apt-get install -y \
+    python3 \
+    python3-pip \
+ && ln -s /usr/bin/python3 /usr/local/bin/python
+
+RUN  apt-get install -y \
+     software-properties-common \
+  &&  add-apt-repository ppa:ethereum/ethereum
+  
+RUN apt-get update \
+   && apt-get install -y \
+      solc
+  
+
+
+RUN  pip3 install -r requirements.txt
+
+RUN mkdir  ../workdir \
+  && mv  Save_logs.sh solidity_files/ ../workdir 
+  
+RUN cd ../ \
+    && cd workdir 
+
+
+RUN chmod +x Save_logs.sh
+
+RUN ./Save_logs.sh
+
+RUN apt-get install -y ethereum
+
+RUN  echo  geth  --rinkeby --datadir .  --http --http.api db,eth,net,web3,personal  > eth_start.sh
+
+RUN chmod +x eth_start.sh
+
+RUN ./eth_start.sh
+
+WORKDIR /home/mythril
+
+
