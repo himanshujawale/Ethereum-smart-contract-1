@@ -40,10 +40,10 @@ WORKDIR /home/mythril
 
 RUN  pip3 install -r requirements.txt
 
-RUN
-RUN mv  Save_logs.sh solidity_files/ ../work 
+RUN mkdir ../workdir
+RUN mv  Save_logs.sh solidity_files/ ../workdir 
 
-WORKDIR /home/work 
+WORKDIR /home/workdir 
 
 
 
