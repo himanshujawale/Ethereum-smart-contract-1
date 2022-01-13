@@ -1,9 +1,13 @@
+# pull ubuntu image from docker hub
 FROM ubuntu:focal
 
+#disable frontend 
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Space-separated version string without leading 'v' (e.g. "0.4.21 0.4.22") 
 ARG SOLC
+
+#update all libarary and install wget libirary to download data from http url,uzip,python,pip create soft-link for python etc.
 
 RUN apt-get update \
   && apt-get upgrade -y \
@@ -15,33 +19,47 @@ RUN apt-get update \
    software-properties-common \
  && ln -s /usr/bin/python3 /usr/local/bin/python
 
+# download all file from github with the help of wget 
 RUN wget https://github.com/Microservices-delixus/Ethereum-smart-contract/archive/main.zip
 
+# extract main.zip file 
 RUN  unzip main.zip 
+
+#rename file name Ethereum-smart-contract-main to mian
 RUN  mv Ethereum-smart-contract-main/ main 
+
+#Move main folder into home directory
 RUN  mv main/ /home
 
+# add ethereum libarary and install common properties
 RUN add-apt-repository ppa:ethereum/ethereum \
  && apt-get update \
  && apt-get install -y solc
   
+# set Working directory
 WORKDIR /home/main/
 
+#install all requirements dependency
 RUN pip3 install -r requirements.txt
 
+#install Slither, the Solidity source analyzer
 RUN pip3 install slither-analyzer
 
+# create new workdir into home directory and move file into workdir
 RUN mkdir ../workdir
 RUN mv slither_analysis.sh mythril_analysis.sh solidity_files/ ../workdir
 
+# change WORKDIR to workdir
 WORKDIR /home/workdir 
 
+#give files execute permission to apply slither and mythril analyze on solodity 
 RUN chmod -R a+rwx slither_analysis.sh mythril_analysis.sh
 
+# execute slither_analysis.sh file to save slither analyze output of solidity file inside logfile
 RUN ./slither_analysis.sh
 
+# set docker cmd at the time of starting container
 CMD /bin/bash
-
 
 
 
