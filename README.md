@@ -4,6 +4,7 @@
 
 ## Step for dockerfile execution
 - Step1:- Download Docker_mythril_log file and Rename it Dockerfile
+- [ Docker build -t "image-name that u want" .](docs/CONTRIBUTING.md)
 - Step2:- Run cmd on terminal :- Docker build -t "image-name that u want" .
 - Step3:- When Step2 successful execute mean mythril_log container created successfully and ready to operate and deploy on docker hub
 - Step4 : if want to start Mythril_log Container :- "docker run -it  Container-name 
