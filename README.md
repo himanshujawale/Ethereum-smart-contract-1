@@ -14,8 +14,8 @@
     <tr>
     <td>dockerfile-mythril</td>
      <td>dockerfile-slither</td>
-     <td>vertigo</td>
-     <td>Echidna</td>
+     <td>dockerfile-vertigo</td>
+     <td>dockerfile-echidna</td>
    
   </tr>
  </table>
