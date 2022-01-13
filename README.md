@@ -1,6 +1,6 @@
 ## Dokerfiles
- - dockerfile-mythril
- - dockerfile-slither
+ - dockerfile-mythril : 1st docker file with ethereum setup
+ - dockerfile-slither : update version of dockerfile-mythril and mythril also included
 
 ## Step for dockerfile execution
 - Step1:- Download Docker_mythril_log file and Rename it Dockerfile
