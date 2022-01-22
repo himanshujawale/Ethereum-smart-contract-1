@@ -12,7 +12,7 @@ RUN apt-get install -y \
 RUN mkdir kafka
 
 WORKDIR /kafka
-RUN wget https://dlcdn.apache.org/kafka/3.0.0/kafka-3.0.0-src.tgz
+RUN wget https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
 
 RUN tar zxvf kafka-3.0.0-src.tgz
 
